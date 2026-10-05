@@ -1,8 +1,13 @@
-from fastapi import FastAPI
+"""Entry point: ``uvicorn main:app`` serves the mirror."""
 
-app = FastAPI()
+import os
 
+from mirror.app import create_app
+from mirror.config import Settings
 
-@app.get("/")
-def read_root():
-    return {"Hello": "World"}
+app = create_app(
+    Settings(
+        upstream_url=os.environ.get("MIRROR_UPSTREAM_URL", "https://pypi.org"),
+        cache_dir=os.environ.get("MIRROR_CACHE_DIR", ".mirror-cache"),
+    )
+)
