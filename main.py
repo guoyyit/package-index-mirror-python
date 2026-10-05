@@ -1,8 +1,5 @@
-from fastapi import FastAPI
+"""Entry point: ``uvicorn main:app``."""
 
-app = FastAPI()
+from pkgmirror.app import create_app
 
-
-@app.get("/")
-def read_root():
-    return {"Hello": "World"}
+app = create_app()
